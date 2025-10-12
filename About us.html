@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -50,21 +50,50 @@
             color: white;
         }
 
-            .logo svg {
-                width: 40px;
-                height: 40px;
-            }
+        .logo svg {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #fff;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 18px;
+            margin: 0;
+            padding: 0;
+        }
 
         nav a {
             color: #fff;
             text-decoration: none;
-            margin-left: 18px;
             font-weight: 500;
+            transition: 0.3s;
         }
 
-            nav a:hover {
-                color: var(--accent-yellow);
-            }
+        nav a:hover, nav a.active {
+            color: var(--accent-yellow);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+        }
 
         main {
             max-width: var(--max-width);
@@ -77,49 +106,54 @@
             margin-bottom: 20px;
             font-weight: 700;
             color: var(--primary);
+            text-align: center;
         }
 
         section {
             margin-bottom: 50px;
         }
 
-            section h2 {
-                font-size: 28px;
-                margin-bottom: 12px;
-                font-weight: 600;
-                color: var(--text-dark);
-            }
+        section h2 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-align: center;
+        }
 
-            section p {
-                color: var(--text-muted);
-                font-size: 16px;
-                max-width: 70ch;
-            }
+        section p {
+            color: var(--text-muted);
+            font-size: 16px;
+            max-width: 70ch;
+            margin: 0 auto 15px auto;
+            text-align: center;
+        }
 
-        .values {
+        .cards {
             display: grid;
             grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
             gap: 24px;
             margin-top: 20px;
         }
 
-        .value-box {
+        .card {
             background: white;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
 
-            .value-box h3 {
-                margin: 0 0 10px;
-                font-size: 20px;
-                color: var(--secondary);
-            }
+        .card h3 {
+            margin: 0 0 10px;
+            font-size: 20px;
+            color: var(--secondary);
+        }
 
-            .value-box p {
-                margin: 0;
-                font-size: 15px;
-            }
+        .card p {
+            margin: 0;
+            font-size: 15px;
+            color: var(--text-muted);
+        }
 
         footer {
             background: var(--bg-dark);
@@ -137,9 +171,42 @@
             gap: 20px;
         }
 
-            .footer-inner small {
-                opacity: 0.85;
+        .footer-inner small {
+            opacity: 0.85;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media(max-width:768px){
+            .hamburger {
+                display: flex;
             }
+
+            nav ul {
+                position: absolute;
+                top: 70px;
+                right: 0;
+                background: var(--bg-dark);
+                flex-direction: column;
+                width: 200px;
+                padding: 10px 0;
+                display: none;
+                border-radius: 0 0 0 10px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            nav a {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -148,7 +215,6 @@
     <header>
         <div class="nav-inner">
             <a href="index.html" class="logo">
-                <!-- Simple sun/leaf SVG -->
                 <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="32" cy="22" r="8" fill="#FF6600" />
                     <path d="M32 34c-9 8-12 14-12 20 6-2 14-5 24 0 0-8-6-16-12-20z" fill="#4CAF50" />
@@ -158,56 +224,90 @@
                     <div style="font-size:11px;">FOODS & JUICES</div>
                 </div>
             </a>
+
+            <div class="hamburger" id="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
             <nav>
-                <a href="index.html">Home</a>
-                <a href="About us.html">About</a>
-                <a href="Menu.html">Menu</a>
-                <a href="Contact Us.html">Contact</a>
+                <ul id="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="About us.html" class="active">About</a></li>
+                    <li><a href="Menu.html">Menu</a></li>
+                    <li><a href="Contact Us.html">Contact</a></li>
+                </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Main content -->
+    <!-- Main Content -->
     <main>
         <h1>About Us</h1>
 
         <section>
             <h2>Our Story</h2>
             <p>
-                Shams Foods & Juices was founded with one mission — to bring the power of freshness to your everyday life.
-                What started as a small passion for natural fruit juices has grown into a trusted brand for wholesome meals
-                and refreshing drinks. Every product is crafted with care, combining premium quality ingredients and a
-                commitment to healthy living.
+                Shams Foods & Juices started with a passion for natural, healthy, and delicious fruit juices. Over the years,
+                we have grown into a brand recognized for quality, freshness, and customer satisfaction.
             </p>
         </section>
 
         <section>
             <h2>Our Mission</h2>
             <p>
-                To serve natural goodness that energizes the body, delights the taste buds, and inspires healthier
-                lifestyle choices for everyone. We believe that food and drink should not only taste good,
-                but also make you feel good.
+                To serve natural goodness that energizes the body, delights the taste buds, and inspires healthier lifestyle choices.
             </p>
         </section>
 
         <section>
-            <h2>Our Values</h2>
-            <div class="values">
-                <div class="value-box">
+            <h2>Our Vision</h2>
+            <p>
+                To become a leading brand in natural and healthy food products, known for freshness, quality, and sustainability.
+            </p>
+        </section>
+
+        <section>
+            <h2>Our Core Values</h2>
+            <div class="cards">
+                <div class="card">
                     <h3>🌿 Freshness</h3>
-                    <p>We source and prepare everything daily to ensure the highest quality and natural taste.</p>
+                    <p>Daily preparation with high-quality ingredients to ensure natural taste.</p>
                 </div>
-                <div class="value-box">
+                <div class="card">
                     <h3>⭐ Quality</h3>
-                    <p>From ingredients to packaging, we maintain premium standards in every product we deliver.</p>
+                    <p>Maintaining premium standards from ingredients to packaging.</p>
                 </div>
-                <div class="value-box">
+                <div class="card">
                     <h3>🤝 Customer Care</h3>
-                    <p>Your satisfaction matters. We pride ourselves on friendly service and reliable delivery.</p>
+                    <p>Friendly service and reliable delivery for maximum satisfaction.</p>
                 </div>
-                <div class="value-box">
-                    <h3>🌍 Health & Sustainability</h3>
-                    <p>We promote healthier eating while being mindful of our impact on the environment.</p>
+                <div class="card">
+                    <h3>🌍 Sustainability</h3>
+                    <p>Promoting healthy eating and being mindful of environmental impact.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Leadership</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>Founder & CEO</h3>
+                    <p>Mr. Ahmed Shams — Visionary leader driving the brand’s mission and growth.</p>
+                </div>
+                <div class="card">
+                    <h3>Operations Manager</h3>
+                    <p>Ms. Aisha Nanyonga — Ensures smooth day-to-day operations and quality control.</p>
+                </div>
+                <div class="card">
+                    <h3>Head Chef & Nutritionist</h3>
+                    <p>Mr. Samuel Kato — Develops nutritious menus and oversees food preparation.</p>
+                </div>
+                <div class="card">
+                    <h3>Marketing & Sales</h3>
+                    <p>Ms. Fatima Aliko — Leads brand promotion, customer engagement, and sales strategy.</p>
                 </div>
             </div>
         </section>
@@ -228,7 +328,14 @@
         </div>
     </footer>
 
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('show');
+        });
+    </script>
+
 </body>
 </html>
-
-
